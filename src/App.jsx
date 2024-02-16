@@ -28,12 +28,18 @@ function App() {
     });
   };
 
-  const handleUpdateCart = (product, quantity) => {
+  const handleUpdateCart = (product, quantity) => {    
     toast.info(`Quantidade do item ${product.name} atualizada`);
     setCartItems((prevItems) => {
       return prevItems.map((item) => item.id === product.id ? {...item, quantity: +quantity} : item
       );
     });
+  };
+
+  const handleRemoveFromCart = (product) => {
+    toast.error(`${product.name} foi removido com sucesso`);
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== product.id)
+    );
   };
 
   return (
@@ -46,7 +52,16 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Catalog onAddToCart={handleAddCart}/>} />
-          <Route path="/cart" element={<Cart cartItems={cartItems} onUpdateCart={handleUpdateCart}/>} />
+          <Route 
+            path="/cart" 
+            element={
+              <Cart 
+                cartItems={cartItems} 
+                onUpdateCart={handleUpdateCart}
+                onRemoveFromCart={handleRemoveFromCart}
+                />
+              } 
+            />
           <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </div>
