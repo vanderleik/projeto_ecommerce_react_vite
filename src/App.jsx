@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import {useState } from 'react'
 import Catalog from './components/Catalog'
 import Cart from './components/Cart'
-import ThankYou from './components/ThankYou'
+import ThankYouPage from './components/ThankYouPage'
 
 import{ ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,10 +59,21 @@ function App() {
                 cartItems={cartItems} 
                 onUpdateCart={handleUpdateCart}
                 onRemoveFromCart={handleRemoveFromCart}
+                setCartItems={setCartItems}
+                onCheckout={() => {
+                  if (cartItems.length > 0) {
+                    toast.success('Compra finalizada com sucesso');
+                    setCartItems([]);
+                  } else {
+                    toast.error('Seu carrinho está vazio');
+                  }
+                }
+
+                }
                 />
               } 
             />
-          <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/thank-you" element={<ThankYouPage />} />
         </Routes>
       </div>
       <ToastContainer 
