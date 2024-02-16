@@ -26,7 +26,14 @@ function App() {
         return [...prevItems, { ...product, quantity }] //retorna o carrinho todo mais o novo item
       }
     });
+  };
 
+  const handleUpdateCart = (product, quantity) => {
+    toast.info(`Quantidade do item ${product.name} atualizada`);
+    setCartItems((prevItems) => {
+      return prevItems.map((item) => item.id === product.id ? {...item, quantity: +quantity} : item
+      );
+    });
   };
 
   return (
@@ -39,7 +46,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Catalog onAddToCart={handleAddCart}/>} />
-          <Route path="/cart" element={<Cart cartItems={cartItems}/>} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} onUpdateCart={handleUpdateCart}/>} />
           <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </div>
